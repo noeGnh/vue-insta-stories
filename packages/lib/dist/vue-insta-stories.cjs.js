@@ -495,6 +495,11 @@ var Stories = vueDemi.defineComponent({
             type: Boolean,
             default: false,
             required: false,
+        },
+        hideOnPause: {
+            type: Boolean,
+            default: true,
+            required: false,
         }
     },
     emits: ['storyStart', 'storyEnd', 'allStoriesEnd', 'update:currentIndex', 'update:isPaused', 'seeMore'],
@@ -559,9 +564,11 @@ var Stories = vueDemi.defineComponent({
             this.paused = !this.paused;
         },
         pause: function () {
-            fadeOut(this.$refs.timeline.$el);
-            if (this.$refs.header)
-                fadeOut(this.$refs.header);
+            if (this.hideOnPause) {
+                fadeOut(this.$refs.timeline.$el);
+                if (this.$refs.header)
+                    fadeOut(this.$refs.header);
+            }
         },
         play: function () {
             fadeIn(this.$refs.timeline.$el);

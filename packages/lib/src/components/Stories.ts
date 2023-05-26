@@ -33,6 +33,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    hideOnPause: {
+      type: Boolean,
+      default: true,
+      required: false,
     }
   },
   emits: ['storyStart', 'storyEnd', 'allStoriesEnd', 'update:currentIndex', 'update:isPaused', 'seeMore'],
@@ -93,9 +98,11 @@ export default defineComponent({
       this.paused = !this.paused
     },
     pause() {
-      fadeOut((this.$refs.timeline as any).$el as HTMLElement)
-      if (this.$refs.header)
-        fadeOut(this.$refs.header as HTMLElement)
+      if (this.hideOnPause) {
+        fadeOut((this.$refs.timeline as any).$el as HTMLElement)
+        if (this.$refs.header)
+          fadeOut(this.$refs.header as HTMLElement)
+      }
     },
     play() {
       fadeIn((this.$refs.timeline as any).$el as HTMLElement)
